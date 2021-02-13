@@ -23,6 +23,7 @@ def execute_sql(sql, values=(), commit=False, single=False):
         results = connection.commit()
     else:
         results = cursor.fetchone() if single else cursor.fetchall()
+
     cursor.close()
     return results
 
@@ -61,8 +62,8 @@ def employer(employer_id):
     return render_template('employer.html', employer=employer, jobs=jobs, reviews=reviews)
 
 
-@app.route('/employer/<employer_id>/review')
-def review(employer_id, methods=('GET', 'POST')):
+@app.route('/employer/<employer_id>/review', methods={'GET', 'POST'})
+def review(employer_id):
     if request.method == 'POST':
         review = request.form['review']
         rating = request.form['rating']
